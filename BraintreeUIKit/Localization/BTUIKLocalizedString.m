@@ -4,11 +4,16 @@
 
 + (NSBundle *)localizationBundle {
 
-    static NSString * bundleName = @"Braintree-UIKit-Localization";
-    NSString *localizationBundlePath = [[NSBundle mainBundle] pathForResource:bundleName ofType:@"bundle"];
-    if (!localizationBundlePath) {
-        localizationBundlePath = [[NSBundle bundleForClass:[self class]] pathForResource:bundleName ofType:@"bundle"];
+    NSString *language = [[NSUserDefaults standardUserDefaults] stringForKey:@"language"];
+    NSString *localizationBundlePathName = @"Base";
+    
+    if ([language isEqualToString:@"cn"]) {
+        localizationBundlePathName = @"zh-Hans";
+    } else if ([language isEqualToString:@"tw"]) {
+        localizationBundlePathName = @"zh-Hant";
     }
+    
+    NSString *localizationBundlePath = [[NSBundle mainBundle] pathForResource:localizationBundlePathName ofType:@"lproj"];
     
     return localizationBundlePath ? [NSBundle bundleWithPath:localizationBundlePath] : [NSBundle mainBundle];
 }
@@ -30,7 +35,7 @@
 #pragma mark Localizations
 
 + (NSString *)CARD_DETAILS_LABEL {
-    return NSLocalizedStringWithDefaultValue(@"CARD_DETAILS_LABEL", [self localizationTable], [self localizationBundle], @"Card number is required", @"CARD_DETAILS_LABEL");
+    return NSLocalizedStringWithDefaultValue(@"CARD_DETAILS_LABEL", [self localizationTable], [self localizationBundle], @"Card Details", @"CARD_DETAILS_LABEL");
 }
 + (NSString *)ENTER_CARD_DETAILS_HELP_LABEL {
     return NSLocalizedStringWithDefaultValue(@"ENTER_CARD_DETAILS_HELP_LABEL", [self localizationTable], [self localizationBundle], @"Enter your card details starting with the card number.", @"ENTER_CARD_DETAILS_HELP_LABEL");

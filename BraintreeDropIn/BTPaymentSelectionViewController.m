@@ -270,6 +270,9 @@
             // no action
         } else {
             self.paymentMethodNonces = [paymentMethodNonces copy];
+            self.paymentMethodNonces = [self.paymentMethodNonces filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+                return [evaluatedObject isKindOfClass:[BTCardNonce class]];
+            }]];
             if (completionBlock) {
                 completionBlock();
             }

@@ -1,4 +1,3 @@
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "BTDropInBaseViewController.h"
 #if __has_include("BraintreeUIKit.h")

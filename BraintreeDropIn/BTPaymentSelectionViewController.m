@@ -269,11 +269,14 @@
         if (error) {
             // no action
         } else {
-            self.paymentMethodNonces = [paymentMethodNonces copy];
-            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id  _Nullable evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
-                return [evaluatedObject isKindOfClass:[BTCardNonce class]];
-            }];
-            self.paymentMethodNonces = [self.paymentMethodNonces filteredArrayUsingPredicate:predicate];
+            NSArray *allPaymentMethodsNonces = [paymentMethodNonces copy];
+            NSMutableArray *availablePaymentMethodsNonces = [NSMutableArray array];
+            for (id paymentMethod in allPaymentMethodsNonces) {
+                if ([paymentMethod isKindOfClass:[BTCardNonce class]]) {
+                    [availablePaymentMethodsNonces addObject:paymentMethod];
+                }
+            }
+            self.paymentMethodNonces = availablePaymentMethodsNonces;
             if (completionBlock) {
                 completionBlock();
             }
